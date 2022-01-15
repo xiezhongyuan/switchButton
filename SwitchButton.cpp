@@ -38,7 +38,7 @@ void SwitchButton::drawBackGround(QPainter *painter)
     painter->setPen(Qt::NoPen);
 
     QColor bgColor = m_checked ? m_bgColorOn : m_bgColorOff;
-    if (isEnabled()) {
+    if (!isEnabled()) {
         bgColor.setAlpha(60);
     }
 
@@ -87,6 +87,9 @@ void SwitchButton::drawSlider(QPainter *painter)
     QColor color = m_checked ? m_sliderColorOn : m_sliderColorOff;
 
     painter->setBrush(QBrush(color));
+	if (checked() && m_startX == 0) {
+		m_startX = width() - height();
+	}
 
     int sliderWidth = qMin(width(), height()) - m_space * 2;
     QRect rect(m_space + m_startX, m_space, sliderWidth, sliderWidth);
